@@ -4,8 +4,8 @@ import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.exception.ConteudoNaoEncontrado;
 import br.com.minhavacina.mapper.UsuarioMapper;
 import br.com.minhavacina.repository.UsuarioRepository;
-import br.com.minhavacina.request.UsuarioPostRequest;
-import br.com.minhavacina.request.UsuarioPutRequest;
+import br.com.minhavacina.request.usuario.UsuarioPostRequest;
+import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

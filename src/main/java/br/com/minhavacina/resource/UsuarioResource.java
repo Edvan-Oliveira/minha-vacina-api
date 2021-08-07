@@ -1,8 +1,8 @@
 package br.com.minhavacina.resource;
 
 import br.com.minhavacina.domain.Usuario;
-import br.com.minhavacina.request.UsuarioPostRequest;
-import br.com.minhavacina.request.UsuarioPutRequest;
+import br.com.minhavacina.request.usuario.UsuarioPostRequest;
+import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import br.com.minhavacina.service.UsuarioService;
 import br.com.minhavacina.shared.Constantes;
 import lombok.AllArgsConstructor;

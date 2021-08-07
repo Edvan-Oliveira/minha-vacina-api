@@ -1,4 +1,4 @@
-package br.com.minhavacina.request;
+package br.com.minhavacina.request.usuario;
 
 import br.com.minhavacina.domain.Municipio;
 import lombok.Data;

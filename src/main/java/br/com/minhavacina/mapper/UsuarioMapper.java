@@ -1,8 +1,8 @@
 package br.com.minhavacina.mapper;
 
 import br.com.minhavacina.domain.Usuario;
-import br.com.minhavacina.request.UsuarioPostRequest;
-import br.com.minhavacina.request.UsuarioPutRequest;
+import br.com.minhavacina.request.usuario.UsuarioPostRequest;
+import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
