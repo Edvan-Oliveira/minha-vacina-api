@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public abstract class UsuarioMapper {
-    public static UsuarioMapper INSTANCIA = Mappers.getMapper(UsuarioMapper.class);
+    public static final UsuarioMapper INSTANCIA = Mappers.getMapper(UsuarioMapper.class);
     public abstract Usuario converterParaUsuario(UsuarioPostRequest usuarioPostRequest);
     public abstract Usuario converterParaUsuario(UsuarioPutRequest usuarioPutRequest);
 }

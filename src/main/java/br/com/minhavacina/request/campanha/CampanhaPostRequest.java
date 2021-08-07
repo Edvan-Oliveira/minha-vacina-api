@@ -4,6 +4,7 @@ import br.com.minhavacina.domain.Municipio;
 import br.com.minhavacina.domain.Vacina;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,7 +13,7 @@ import java.util.Date;
 @Data
 public class CampanhaPostRequest {
     @NotEmpty(message = "Nome da campanha não pode ser vazio")
-    @Size(max = 25, message = "Nome da campanha não pode passar de {max} caracteres")
+    @Size(max = 200, message = "Nome da campanha não pode passar de {max} caracteres")
     private String nome;
 
     @NotEmpty(message = "Descrição da campanha não pode ser vazio")
@@ -29,9 +30,9 @@ public class CampanhaPostRequest {
     private Date dataInicio;
     private Date dataFim;
 
-    @Size(min = 0, message = "Idade mínima da campanha não pode ser menor que {min}")
+    @Min(value = 0, message = "Idade mínima da campanha não pode ser menor que {value}")
     private Integer idadeMinima;
 
-    @Size(min = 0, message = "Idade máxima da campanha não pode ser menor que {min}")
+    @Min(value = 0, message = "Idade máxima da campanha não pode ser menor que {value}")
     private Integer idadeMaxima;
 }
