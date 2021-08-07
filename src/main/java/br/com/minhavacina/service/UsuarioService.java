@@ -1,7 +1,7 @@
 package br.com.minhavacina.service;
 
 import br.com.minhavacina.domain.Usuario;
-import br.com.minhavacina.exception.ConteudoNaoEncontrado;
+import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.UsuarioMapper;
 import br.com.minhavacina.repository.UsuarioRepository;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
@@ -22,7 +22,7 @@ public class UsuarioService {
 
     public Usuario buscarUsuarioPorId(Integer id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new ConteudoNaoEncontrado("Usuário não encontrado"));
+                .orElseThrow(() -> new LancarAdvertencia("Usuário não encontrado"));
     }
 
     public Usuario cadastrarNovoUsuario(UsuarioPostRequest usuarioPostRequest) {

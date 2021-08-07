@@ -1,7 +1,7 @@
 package br.com.minhavacina.service;
 
 import br.com.minhavacina.domain.Municipio;
-import br.com.minhavacina.exception.ConteudoNaoEncontrado;
+import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.repository.MunicipioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,6 @@ public class MunicipioService {
 
     public Municipio buscarMunicipioPorId(Integer id) {
         return municipioRepository.findById(id)
-                .orElseThrow(() -> new ConteudoNaoEncontrado("Município não encontado"));
+                .orElseThrow(() -> new LancarAdvertencia("Município não encontado"));
     }
 }
