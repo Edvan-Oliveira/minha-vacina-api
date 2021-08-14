@@ -1,5 +1,6 @@
 package br.com.minhavacina.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,8 +13,10 @@ public class Campanha {
     private Integer id;
     private String nome;
     private String descricao;
+    @JsonIgnoreProperties("campanhas")
     @ManyToOne
     private Vacina vacina;
+    @JsonIgnoreProperties("campanhas")
     @ManyToOne
     private Municipio municipio;
     private boolean ativa;

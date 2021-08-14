@@ -1,5 +1,6 @@
 package br.com.minhavacina.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Vacina {
     private String nome;
     private String descricao;
     private String caminhoImagem;
-    @OneToMany
+    @JsonIgnoreProperties("vacina")
+    @OneToMany(mappedBy = "vacina")
     private List<Campanha> campanhas;
 }
