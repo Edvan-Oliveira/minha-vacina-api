@@ -1,12 +1,14 @@
 package br.com.minhavacina.request.usuario;
 
 import br.com.minhavacina.domain.Municipio;
+import br.com.minhavacina.domain.Vacina;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UsuarioPutRequest {
@@ -26,4 +28,6 @@ public class UsuarioPutRequest {
     @NotEmpty(message = "Senha não pode ser vazia")
     @Size(max = 50, message = "Senha não pode passar de {max} caracteres")
     private String senha;
+
+    private List<Vacina> vacinas;
 }

@@ -12,9 +12,9 @@ public class Campanha {
     private Integer id;
     private String nome;
     private String descricao;
-    @OneToOne
+    @ManyToOne
     private Vacina vacina;
-    @OneToOne
+    @ManyToOne
     private Municipio municipio;
     private boolean ativa;
     private Date dataInicio;
