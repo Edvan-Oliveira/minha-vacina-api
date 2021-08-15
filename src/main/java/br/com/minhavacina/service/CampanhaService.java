@@ -46,16 +46,46 @@ public class CampanhaService {
     }
 
     private void validarCampanha(Campanha campanha) {
-        validarIntervalosDeDatasEIdades(campanha);
+        validarIdades(campanha);
+        boolean continuarValidacao = validarDatasNulas(campanha);
+        if (!continuarValidacao) return;
+        validarIntervalosDeDatas(campanha);
         validarDataInicio(campanha);
         setarCampanhaAtiva(campanha);
     }
 
-    private void validarIntervalosDeDatasEIdades(Campanha campanha) {
+    public void validarIdades(Campanha campanha) {
+        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMinima())
+                && Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMaxima()))
+            return;
+
+        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMinima())
+                && Utilitaria.objetoNaoEstarNuloNemVazio(campanha.getIdadeMaxima()))
+            return;
+
+        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMaxima())
+                && Utilitaria.objetoNaoEstarNuloNemVazio(campanha.getIdadeMinima()))
+            return;
+
+        if (campanha.getIdadeMinima() > campanha.getIdadeMaxima())
+            throw new LancarAdvertencia("Idade mínima da campanha não pode ser menor que a idade máxima");
+    }
+
+    public boolean validarDatasNulas(Campanha campanha) {
+        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataInicio())
+                && Utilitaria.objetoEstarNuloOuVazio(campanha.getDataFim())) {
+            return false;
+        }
+        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataInicio())
+                && Utilitaria.objetoNaoEstarNuloNemVazio(campanha.getDataFim())) {
+            throw new LancarAdvertencia("A data de inicío não pode ser nula e a data final populada");
+        }
+        return true;
+    }
+
+    private void validarIntervalosDeDatas(Campanha campanha) {
         if (campanha.getDataInicio().getTime() > campanha.getDataFim().getTime())
             throw new LancarAdvertencia("Data de início da campanha não pode ser maior que a data final");
-        if (campanha.getIdadeMinima() >= campanha.getIdadeMaxima())
-            throw new LancarAdvertencia("Idade mínima da campanha não pode ser menor que a idade máxima");
     }
 
     private void validarDataInicio(Campanha campanha) {
