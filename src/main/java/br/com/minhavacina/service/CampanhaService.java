@@ -72,13 +72,12 @@ public class CampanhaService {
     }
 
     public boolean validarDatasNulas(Campanha campanha) {
-        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataInicio())
-                && Utilitaria.objetoEstarNuloOuVazio(campanha.getDataFim())) {
-            return false;
+        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataInicio())) {
+            campanha.setDataInicio(new Date());
+            campanha.setAtiva(true);
         }
-        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataInicio())
-                && Utilitaria.objetoNaoEstarNuloNemVazio(campanha.getDataFim())) {
-            throw new LancarAdvertencia("A data de inicío não pode ser nula e a data final populada");
+        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataFim())) {
+            return false;
         }
         return true;
     }
