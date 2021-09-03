@@ -16,6 +16,7 @@ public class Usuario {
     private Date dataNascimento;
     @ManyToOne
     private Municipio municipio;
+    private String email;
     private String senha;
     @ManyToMany
     @JoinTable(name = "usuarios_vacinas", joinColumns = @JoinColumn(name = "usuario_id"),
