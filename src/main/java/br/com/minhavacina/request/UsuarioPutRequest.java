@@ -3,6 +3,7 @@ package br.com.minhavacina.request;
 import br.com.minhavacina.domain.Municipio;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,6 +23,10 @@ public class UsuarioPutRequest {
 
     @NotNull(message = "Município não pode ser nulo")
     private Municipio municipio;
+
+    @NotEmpty(message = "Email não pode ser vázio")
+    @Email(message = "Esse email é inválido")
+    private String email;
 
     @NotEmpty(message = "Senha não pode ser vazia")
     @Size(max = 50, message = "Senha não pode passar de {max} caracteres")

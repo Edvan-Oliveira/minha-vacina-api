@@ -15,5 +15,6 @@ public class Usuario {
     private Date dataNascimento;
     @ManyToOne
     private Municipio municipio;
+    private String email;
     private String senha;
 }
