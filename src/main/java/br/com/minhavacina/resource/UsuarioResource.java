@@ -58,4 +58,10 @@ public class UsuarioResource {
                 ? new ResponseEntity<>(HttpStatus.UNAUTHORIZED) : new ResponseEntity(usuarioLogado, HttpStatus.OK);
     }
 
+    @GetMapping(path = Constantes.VALIDA_EMAIL)
+    public ResponseEntity<Boolean> validarEmail(@PathVariable String email) {
+        boolean existe = Utilitaria.objetoNaoEstarNuloNemVazio(usuarioService.buscarUsuarioPorEmail(email));
+        return new ResponseEntity<>(existe, HttpStatus.OK);
+    }
+
 }

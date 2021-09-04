@@ -7,4 +7,5 @@ public interface Constantes {
     String CAMPANHA = PADRAO + "/campanhas";
     String VACINA = PADRAO + "/vacinas";
     String LOGIN = "/login";
+    String VALIDA_EMAIL = "/validar-email/{email}";
 }
