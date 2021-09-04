@@ -4,8 +4,10 @@ import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.UsuarioMapper;
 import br.com.minhavacina.repository.UsuarioRepository;
+import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
+import br.com.minhavacina.util.Utilitaria;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +48,23 @@ public class UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
+    public Usuario buscarUsuarioPorEmail(String email) {
+        return usuarioRepository.findByEmail(email).isEmpty()
+                ? null : usuarioRepository.findByEmail(email).get(0);
+    }
+
+    public Usuario realizarLogin(UsuarioLoginRequest usuarioLoginRequest) {
+        Usuario usuarioLogin = buscarUsuarioPorEmail(usuarioLoginRequest.getEmail());
+        if (Utilitaria.objetoEstarNuloOuVazio(usuarioLogin)) return null;
+        boolean senhaValida = validarSenha(usuarioLogin, usuarioLoginRequest.getSenha());
+        return senhaValida ? usuarioLogin : null;
+    }
+
     private void criptografarSenha(Usuario usuario) {
         usuario.setSenha(codificador.encode(usuario.getSenha()));
+    }
+
+    private boolean validarSenha(Usuario usuario, String senha) {
+        return codificador.matches(senha, usuario.getSenha());
     }
 }

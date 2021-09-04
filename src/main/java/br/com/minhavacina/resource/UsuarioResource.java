@@ -1,10 +1,12 @@
 package br.com.minhavacina.resource;
 
 import br.com.minhavacina.domain.Usuario;
+import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import br.com.minhavacina.service.UsuarioService;
 import br.com.minhavacina.shared.Constantes;
+import br.com.minhavacina.util.Utilitaria;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -46,6 +49,13 @@ public class UsuarioResource {
     public ResponseEntity deleletarUsuario(@PathVariable Integer id) {
         usuarioService.deletarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping(Constantes.LOGIN)
+    public ResponseEntity<Usuario> realizarLogin(@RequestBody @Valid UsuarioLoginRequest usuarioLoginRequest) {
+        Usuario usuarioLogado = usuarioService.realizarLogin(usuarioLoginRequest);
+        return Utilitaria.objetoEstarNuloOuVazio(usuarioLogado)
+                ? new ResponseEntity<>(HttpStatus.UNAUTHORIZED) : new ResponseEntity(usuarioLogado, HttpStatus.OK);
     }
 
 }
