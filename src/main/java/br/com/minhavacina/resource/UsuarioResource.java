@@ -5,6 +5,7 @@ import br.com.minhavacina.request.usuario.UsuarioGetRequest;
 import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
+import br.com.minhavacina.response.EmailValidaResponse;
 import br.com.minhavacina.service.UsuarioService;
 import br.com.minhavacina.shared.Constantes;
 import lombok.RequiredArgsConstructor;
@@ -60,9 +61,9 @@ public class UsuarioResource {
     }
 
     @GetMapping(path = Constantes.VALIDA_EMAIL)
-    public ResponseEntity<Boolean> validarEmail(@PathVariable String email) {
-        boolean existe = objetoNaoEstarNuloNemVazio(usuarioService.buscarUsuarioPorEmail(email));
-        return new ResponseEntity<>(existe, HttpStatus.OK);
+    public ResponseEntity<EmailValidaResponse> validarEmail(@PathVariable String email) {
+        boolean emailValido = objetoNaoEstarNuloNemVazio(usuarioService.buscarUsuarioPorEmail(email));
+        return ResponseEntity.ok(EmailValidaResponse.builder().email(email).valido(emailValido).build());
     }
 
 }
