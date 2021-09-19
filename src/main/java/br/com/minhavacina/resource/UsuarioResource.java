@@ -1,13 +1,13 @@
 package br.com.minhavacina.resource;
 
 import br.com.minhavacina.domain.Usuario;
+import br.com.minhavacina.request.usuario.UsuarioGetRequest;
 import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import br.com.minhavacina.service.UsuarioService;
 import br.com.minhavacina.shared.Constantes;
-import br.com.minhavacina.util.Utilitaria;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,27 +15,28 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
-@AllArgsConstructor
+import static br.com.minhavacina.util.Utilitaria.*;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(Constantes.USUARIO)
 public class UsuarioResource {
 
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarTodosOsUsuarios() {
+    public ResponseEntity<List<UsuarioGetRequest>> listarTodosOsUsuarios() {
         return ResponseEntity.ok(usuarioService.listarTodosOsUsuarios());
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Integer id) {
-        return ResponseEntity.ok(usuarioService.buscarUsuarioPorId(id));
+    public ResponseEntity<UsuarioGetRequest> buscarUsuarioPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(usuarioService.buscarUsuarioGetRequestPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> cadastrarNovoUsuario(@RequestBody @Valid UsuarioPostRequest usuarioPostRequest) {
+    public ResponseEntity<UsuarioGetRequest> cadastrarNovoUsuario(@RequestBody @Valid UsuarioPostRequest usuarioPostRequest) {
         return new ResponseEntity<>(usuarioService.cadastrarNovoUsuario(usuarioPostRequest), HttpStatus.CREATED);
     }
 
@@ -54,13 +55,13 @@ public class UsuarioResource {
     @PostMapping(Constantes.LOGIN)
     public ResponseEntity<Usuario> realizarLogin(@RequestBody @Valid UsuarioLoginRequest usuarioLoginRequest) {
         Usuario usuarioLogado = usuarioService.realizarLogin(usuarioLoginRequest);
-        return Utilitaria.objetoEstarNuloOuVazio(usuarioLogado)
+        return objetoEstarNuloOuVazio(usuarioLogado)
                 ? new ResponseEntity<>(HttpStatus.UNAUTHORIZED) : new ResponseEntity(usuarioLogado, HttpStatus.OK);
     }
 
     @GetMapping(path = Constantes.VALIDA_EMAIL)
     public ResponseEntity<Boolean> validarEmail(@PathVariable String email) {
-        boolean existe = Utilitaria.objetoNaoEstarNuloNemVazio(usuarioService.buscarUsuarioPorEmail(email));
+        boolean existe = objetoNaoEstarNuloNemVazio(usuarioService.buscarUsuarioPorEmail(email));
         return new ResponseEntity<>(existe, HttpStatus.OK);
     }
 

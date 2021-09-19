@@ -3,15 +3,15 @@ package br.com.minhavacina.service;
 import br.com.minhavacina.domain.Vacina;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.repository.VacinaRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class VacinaService {
-    private VacinaRepository vacinaRepository;
+    private final VacinaRepository vacinaRepository;
 
     public List<Vacina> listarTodasAsVacinas() {
         return vacinaRepository.findAll();

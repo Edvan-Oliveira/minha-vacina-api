@@ -3,8 +3,7 @@ package br.com.minhavacina.resource;
 import br.com.minhavacina.domain.Vacina;
 import br.com.minhavacina.service.VacinaService;
 import br.com.minhavacina.shared.Constantes;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(Constantes.VACINA)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class VacinaResource {
-    private VacinaService vacinaService;
+    private final VacinaService vacinaService;
 
     @GetMapping
     public ResponseEntity<List<Vacina>> listarTodasAsCampanhas() {

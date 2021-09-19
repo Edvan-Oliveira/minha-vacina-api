@@ -6,17 +6,18 @@ import br.com.minhavacina.mapper.CampanhaMapper;
 import br.com.minhavacina.repository.CampanhaRepository;
 import br.com.minhavacina.request.campanha.CampanhaPostRequest;
 import br.com.minhavacina.request.campanha.CampanhaPutRequest;
-import br.com.minhavacina.util.Utilitaria;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+import static br.com.minhavacina.util.Utilitaria.*;
+
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CampanhaService {
-    private CampanhaRepository campanhaRepository;
+    private final CampanhaRepository campanhaRepository;
 
     public List<Campanha> listarTodasAsCampanhas() {
         return campanhaRepository.findAll();
@@ -55,16 +56,16 @@ public class CampanhaService {
     }
 
     public void validarIdades(Campanha campanha) {
-        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMinima())
-                && Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMaxima()))
+        if (objetoEstarNuloOuVazio(campanha.getIdadeMinima())
+                && objetoEstarNuloOuVazio(campanha.getIdadeMaxima()))
             return;
 
-        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMinima())
-                && Utilitaria.objetoNaoEstarNuloNemVazio(campanha.getIdadeMaxima()))
+        if (objetoEstarNuloOuVazio(campanha.getIdadeMinima())
+                && objetoNaoEstarNuloNemVazio(campanha.getIdadeMaxima()))
             return;
 
-        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getIdadeMaxima())
-                && Utilitaria.objetoNaoEstarNuloNemVazio(campanha.getIdadeMinima()))
+        if (objetoEstarNuloOuVazio(campanha.getIdadeMaxima())
+                && objetoNaoEstarNuloNemVazio(campanha.getIdadeMinima()))
             return;
 
         if (campanha.getIdadeMinima() > campanha.getIdadeMaxima())
@@ -72,11 +73,11 @@ public class CampanhaService {
     }
 
     public boolean validarDatasNulas(Campanha campanha) {
-        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataInicio())) {
+        if (objetoEstarNuloOuVazio(campanha.getDataInicio())) {
             campanha.setDataInicio(new Date());
             campanha.setAtiva(true);
         }
-        if (Utilitaria.objetoEstarNuloOuVazio(campanha.getDataFim())) {
+        if (objetoEstarNuloOuVazio(campanha.getDataFim())) {
             return false;
         }
         return true;
@@ -88,13 +89,13 @@ public class CampanhaService {
     }
 
     private void validarDataInicio(Campanha campanha) {
-        Date dataAtual = Utilitaria.converterDataTextoParaDataUtil(Utilitaria.converterDataUtilParaDataTexto(new Date()));
+        Date dataAtual = converterDataTextoParaDataUtil(converterDataUtilParaDataTexto(new Date()));
         if (dataAtual.getTime() > campanha.getDataInicio().getTime())
             throw new LancarAdvertencia("Data de início da campanha não pode ser menor que a data atual");
     }
 
     private void setarCampanhaAtiva(Campanha campanha) {
-        Date dataAtual = Utilitaria.converterDataTextoParaDataUtil(Utilitaria.converterDataUtilParaDataTexto(new Date()));
+        Date dataAtual = converterDataTextoParaDataUtil(converterDataUtilParaDataTexto(new Date()));
         campanha.setAtiva(campanha.getDataInicio().getTime() == dataAtual.getTime());
     }
 }

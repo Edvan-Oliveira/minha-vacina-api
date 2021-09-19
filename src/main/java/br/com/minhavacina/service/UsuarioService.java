@@ -4,25 +4,32 @@ import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.UsuarioMapper;
 import br.com.minhavacina.repository.UsuarioRepository;
+import br.com.minhavacina.request.usuario.UsuarioGetRequest;
 import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
-import br.com.minhavacina.util.Utilitaria;
-import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
+import static br.com.minhavacina.util.Utilitaria.objetoEstarNuloOuVazio;
+
+@RequiredArgsConstructor
 @Service
 public class UsuarioService {
-    private UsuarioRepository usuarioRepository;
-    private PasswordEncoder codificador;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder codificador;
+    private final UsuarioMapper usuarioMapper;
 
-    public List<Usuario> listarTodosOsUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioGetRequest> listarTodosOsUsuarios() {
+        return usuarioMapper.converterParaListaUsuarioGetRequest(usuarioRepository.findAll());
+    }
+
+    public UsuarioGetRequest buscarUsuarioGetRequestPorId(Integer id) {
+        return usuarioMapper.converterParaUsuarioGetRequest(usuarioRepository.findById(id)
+            .orElseThrow(() -> new LancarAdvertencia("Usuário não encntrado")));
     }
 
     public Usuario buscarUsuarioPorId(Integer id) {
@@ -30,15 +37,15 @@ public class UsuarioService {
                 .orElseThrow(() -> new LancarAdvertencia("Usuário não encontrado"));
     }
 
-    public Usuario cadastrarNovoUsuario(UsuarioPostRequest usuarioPostRequest) {
-        Usuario usuario = UsuarioMapper.INSTANCIA.converterParaUsuario(usuarioPostRequest);
+    public UsuarioGetRequest cadastrarNovoUsuario(UsuarioPostRequest usuarioPostRequest) {
+        Usuario usuario = usuarioMapper.converterParaUsuario(usuarioPostRequest);
         criptografarSenha(usuario);
-        return usuarioRepository.save(usuario);
+        return usuarioMapper.converterParaUsuarioGetRequest(usuarioRepository.save(usuario));
     }
 
     public void atualizarUsuario(UsuarioPutRequest usuarioPutRequest) {
         buscarUsuarioPorId(usuarioPutRequest.getId());
-        Usuario usuario = UsuarioMapper.INSTANCIA.converterParaUsuario(usuarioPutRequest);
+        Usuario usuario = usuarioMapper.converterParaUsuario(usuarioPutRequest);
         criptografarSenha(usuario);
         usuarioRepository.save(usuario);
     }
@@ -49,13 +56,12 @@ public class UsuarioService {
     }
 
     public Usuario buscarUsuarioPorEmail(String email) {
-        return usuarioRepository.findByEmail(email).isEmpty()
-                ? null : usuarioRepository.findByEmail(email).get(0);
+        return usuarioRepository.findByEmail(email);
     }
 
     public Usuario realizarLogin(UsuarioLoginRequest usuarioLoginRequest) {
         Usuario usuarioLogin = buscarUsuarioPorEmail(usuarioLoginRequest.getEmail());
-        if (Utilitaria.objetoEstarNuloOuVazio(usuarioLogin)) return null;
+        if (objetoEstarNuloOuVazio(usuarioLogin)) return null;
         boolean senhaValida = validarSenha(usuarioLogin, usuarioLoginRequest.getSenha());
         return senhaValida ? usuarioLogin : null;
     }

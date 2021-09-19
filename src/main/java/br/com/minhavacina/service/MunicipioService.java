@@ -3,15 +3,15 @@ package br.com.minhavacina.service;
 import br.com.minhavacina.domain.Municipio;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.repository.MunicipioRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class MunicipioService {
-    private MunicipioRepository municipioRepository;
+    private final MunicipioRepository municipioRepository;
 
     public List<Municipio> listarTodosOsMunicipios() {
         return municipioRepository.findAll();
