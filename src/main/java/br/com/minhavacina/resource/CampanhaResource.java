@@ -36,14 +36,14 @@ public class CampanhaResource {
     }
 
     @PutMapping @Transactional
-    public ResponseEntity atualizarCampanha(@RequestBody @Valid CampanhaPutRequest campanhaPutRequest) {
+    public ResponseEntity<Void> atualizarCampanha(@RequestBody @Valid CampanhaPutRequest campanhaPutRequest) {
         campanhaService.atualizarCampanha(campanhaPutRequest);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity deletarCampanha(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletarCampanha(@PathVariable Integer id) {
         campanhaService.deletarCampanha(id);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 }

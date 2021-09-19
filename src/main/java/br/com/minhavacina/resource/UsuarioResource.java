@@ -1,5 +1,21 @@
 package br.com.minhavacina.resource;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
@@ -8,14 +24,6 @@ import br.com.minhavacina.service.UsuarioService;
 import br.com.minhavacina.shared.Constantes;
 import br.com.minhavacina.util.Utilitaria;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -40,13 +48,13 @@ public class UsuarioResource {
     }
 
     @PutMapping @Transactional
-    public ResponseEntity atualizarUsuario(@RequestBody @Valid UsuarioPutRequest usuarioPutRequest) {
+    public ResponseEntity<Void> atualizarUsuario(@RequestBody @Valid UsuarioPutRequest usuarioPutRequest) {
         usuarioService.atualizarUsuario(usuarioPutRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity deleletarUsuario(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleletarUsuario(@PathVariable Integer id) {
         usuarioService.deletarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -55,7 +63,7 @@ public class UsuarioResource {
     public ResponseEntity<Usuario> realizarLogin(@RequestBody @Valid UsuarioLoginRequest usuarioLoginRequest) {
         Usuario usuarioLogado = usuarioService.realizarLogin(usuarioLoginRequest);
         return Utilitaria.objetoEstarNuloOuVazio(usuarioLogado)
-                ? new ResponseEntity<>(HttpStatus.UNAUTHORIZED) : new ResponseEntity(usuarioLogado, HttpStatus.OK);
+                ? new ResponseEntity<>(HttpStatus.UNAUTHORIZED) : new ResponseEntity<Usuario>(usuarioLogado, HttpStatus.OK);
     }
 
     @GetMapping(path = Constantes.VALIDA_EMAIL)
