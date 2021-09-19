@@ -11,6 +11,7 @@ import br.com.minhavacina.shared.Constantes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -25,11 +26,13 @@ import static br.com.minhavacina.util.Utilitaria.*;
 public class UsuarioResource {
 
     private final UsuarioService usuarioService;
+    private final PasswordEncoder encoder;
 
     @GetMapping
     public ResponseEntity<List<UsuarioGetRequest>> listarTodosOsUsuarios() {
         return ResponseEntity.ok(usuarioService.listarTodosOsUsuarios());
     }
+
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<UsuarioGetRequest> buscarUsuarioPorId(@PathVariable Integer id) {
@@ -55,9 +58,7 @@ public class UsuarioResource {
 
     @PostMapping(Constantes.LOGIN)
     public ResponseEntity<Usuario> realizarLogin(@RequestBody @Valid UsuarioLoginRequest usuarioLoginRequest) {
-        Usuario usuarioLogado = usuarioService.realizarLogin(usuarioLoginRequest);
-        return objetoEstarNuloOuVazio(usuarioLogado)
-                ? new ResponseEntity<>(HttpStatus.UNAUTHORIZED) : new ResponseEntity(usuarioLogado, HttpStatus.OK);
+        return null;
     }
 
     @GetMapping(path = Constantes.VALIDA_EMAIL)

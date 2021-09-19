@@ -5,22 +5,19 @@ import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.UsuarioMapper;
 import br.com.minhavacina.repository.UsuarioRepository;
 import br.com.minhavacina.request.usuario.UsuarioGetRequest;
-import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static br.com.minhavacina.util.Utilitaria.objetoEstarNuloOuVazio;
+import static br.com.minhavacina.util.Utilitaria.criptografarSenha;
 
 @RequiredArgsConstructor
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder codificador;
     private final UsuarioMapper usuarioMapper;
 
     public List<UsuarioGetRequest> listarTodosOsUsuarios() {
@@ -57,20 +54,5 @@ public class UsuarioService {
 
     public Usuario buscarUsuarioPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
-    }
-
-    public Usuario realizarLogin(UsuarioLoginRequest usuarioLoginRequest) {
-        Usuario usuarioLogin = buscarUsuarioPorEmail(usuarioLoginRequest.getEmail());
-        if (objetoEstarNuloOuVazio(usuarioLogin)) return null;
-        boolean senhaValida = validarSenha(usuarioLogin, usuarioLoginRequest.getSenha());
-        return senhaValida ? usuarioLogin : null;
-    }
-
-    private void criptografarSenha(Usuario usuario) {
-        usuario.setSenha(codificador.encode(usuario.getSenha()));
-    }
-
-    private boolean validarSenha(Usuario usuario, String senha) {
-        return codificador.matches(senha, usuario.getSenha());
     }
 }

@@ -1,10 +1,18 @@
 package br.com.minhavacina.util;
 
+import br.com.minhavacina.domain.Usuario;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class Utilitaria {
+
+    private static PasswordEncoder encoderSenha = new BCryptPasswordEncoder();
+
     public static Date converterDataTextoParaDataUtil(String dataTexto) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(dataTexto);
@@ -31,4 +39,7 @@ public final class Utilitaria {
         return false;
     }
 
+    public static void criptografarSenha(Usuario usuario) {
+         usuario.setSenha(encoderSenha.encode(usuario.getSenha()));
+    }
 }
