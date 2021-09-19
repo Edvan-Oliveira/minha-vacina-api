@@ -49,13 +49,13 @@ public class UsuarioResource {
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizarUsuario(@RequestBody @Valid UsuarioPutRequest usuarioPutRequest) {
+    public ResponseEntity<Void> atualizarUsuario(@RequestBody @Valid UsuarioPutRequest usuarioPutRequest) {
         usuarioService.atualizarUsuario(usuarioPutRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity deleletarUsuario(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleletarUsuario(@PathVariable Integer id) {
         usuarioService.deletarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

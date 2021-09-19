@@ -36,7 +36,7 @@ public class UsuarioService implements UserDetailsService {
 
     public UsuarioGetRequest buscarUsuarioGetRequestPorId(Integer id) {
         return usuarioMapper.converterParaUsuarioGetRequest(usuarioRepository.findById(id)
-            .orElseThrow(() -> new LancarAdvertencia("Usuário não encntrado")));
+                .orElseThrow(() -> new LancarAdvertencia("Usuário não encntrado")));
     }
 
     public Usuario buscarUsuarioPorId(Integer id) {
