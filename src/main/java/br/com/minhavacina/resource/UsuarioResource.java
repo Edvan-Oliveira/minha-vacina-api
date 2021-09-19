@@ -76,5 +76,4 @@ public class UsuarioResource {
         boolean emailValido = objetoNaoEstarNuloNemVazio(usuarioService.buscarUsuarioPorEmail(email));
         return ResponseEntity.ok(EmailValidaResponse.builder().email(email).valido(emailValido).build());
     }
-
 }

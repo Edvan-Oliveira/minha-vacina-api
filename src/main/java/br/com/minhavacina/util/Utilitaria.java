@@ -1,7 +1,6 @@
 package br.com.minhavacina.util;
 
 import br.com.minhavacina.domain.Usuario;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
