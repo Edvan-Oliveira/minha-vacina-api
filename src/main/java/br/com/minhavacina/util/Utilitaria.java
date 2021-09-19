@@ -1,6 +1,7 @@
 package br.com.minhavacina.util;
 
 import br.com.minhavacina.domain.Usuario;
+import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,6 +37,10 @@ public final class Utilitaria {
             if (!objeto.equals("")) return true;
         }
         return false;
+    }
+
+    public static String criptografarSenha(String senha) {
+        return encoderSenha.encode(senha);
     }
 
     public static void criptografarSenha(Usuario usuario) {

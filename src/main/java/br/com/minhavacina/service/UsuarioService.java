@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static br.com.minhavacina.util.Utilitaria.criptografarSenha;
+import static br.com.minhavacina.util.Utilitaria.objetoEstarNuloOuVazio;
 
 @RequiredArgsConstructor
 @Service
@@ -50,9 +51,8 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public void atualizarUsuario(UsuarioPutRequest usuarioPutRequest) {
-        buscarUsuarioPorId(usuarioPutRequest.getId());
+        verificarSenhaAntesDeAtualizar(usuarioPutRequest);
         Usuario usuario = usuarioMapper.converterParaUsuario(usuarioPutRequest);
-        criptografarSenha(usuario);
         usuarioRepository.save(usuario);
     }
 
@@ -63,5 +63,12 @@ public class UsuarioService implements UserDetailsService {
 
     public Usuario buscarUsuarioPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
+    }
+
+    private void verificarSenhaAntesDeAtualizar(UsuarioPutRequest usuarioPutRequest) {
+        Usuario usuarioSalvo = buscarUsuarioPorId(usuarioPutRequest.getId());
+        String senha = objetoEstarNuloOuVazio(usuarioPutRequest.getSenha())
+                ? usuarioSalvo.getSenha() : criptografarSenha(usuarioPutRequest.getSenha());
+        usuarioPutRequest.setSenha(senha);
     }
 }

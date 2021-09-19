@@ -1,6 +1,5 @@
 package br.com.minhavacina.resource;
 
-import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.request.usuario.UsuarioGetRequest;
 import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
@@ -48,7 +47,8 @@ public class UsuarioResource {
         return new ResponseEntity<>(usuarioService.cadastrarNovoUsuario(usuarioPostRequest), HttpStatus.CREATED);
     }
 
-    @PutMapping @Transactional
+    @PutMapping
+    @Transactional
     public ResponseEntity atualizarUsuario(@RequestBody @Valid UsuarioPutRequest usuarioPutRequest) {
         usuarioService.atualizarUsuario(usuarioPutRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

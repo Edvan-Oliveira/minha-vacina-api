@@ -30,12 +30,14 @@ public class CampanhaResource {
         return ResponseEntity.ok(campanhaService.buscarCampanhaPorId(id));
     }
 
-    @PostMapping @Transactional
+    @PostMapping
+    @Transactional
     public ResponseEntity<Campanha> cadastrarNovaCampanha(@RequestBody @Valid CampanhaPostRequest campanhaPostRequest) {
         return new ResponseEntity<>(campanhaService.cadastrarNovaCampanha(campanhaPostRequest), HttpStatus.CREATED);
     }
 
-    @PutMapping @Transactional
+    @PutMapping
+    @Transactional
     public ResponseEntity atualizarCampanha(@RequestBody @Valid CampanhaPutRequest campanhaPutRequest) {
         campanhaService.atualizarCampanha(campanhaPutRequest);
         return new ResponseEntity(HttpStatus.NO_CONTENT);

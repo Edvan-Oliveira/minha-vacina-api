@@ -7,6 +7,7 @@ import br.com.minhavacina.service.UsuarioService;
 import br.com.minhavacina.shared.Constantes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,7 +34,8 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(Constantes.LOGIN_ABSOLUTO).permitAll()
+                .antMatchers(HttpMethod.POST, Constantes.LOGIN_ABSOLUTO).permitAll()
+                .antMatchers(HttpMethod.POST, Constantes.USUARIO).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

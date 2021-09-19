@@ -2,6 +2,8 @@ package br.com.minhavacina.shared;
 
 public interface Constantes {
     String PADRAO = "/minha-vacina-api";
+    String WEB = PADRAO + "/web";
+    String APP = PADRAO + "/app";
     String MUNICIPIO = PADRAO + "/municipios";
     String USUARIO = PADRAO + "/usuarios";
     String CAMPANHA = PADRAO + "/campanhas";
@@ -9,4 +11,10 @@ public interface Constantes {
     String LOGIN = "/login";
     String LOGIN_ABSOLUTO =  USUARIO + "/login";
     String VALIDA_EMAIL = "/validar-email/{email}";
+
+    interface ROLES {
+        String PREFIXO = "ROLE_";
+        String WEB = PREFIXO + "WEB";
+        String APP = PREFIXO + "APP";
+    }
 }
