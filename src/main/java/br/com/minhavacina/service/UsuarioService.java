@@ -8,17 +8,27 @@ import br.com.minhavacina.request.usuario.UsuarioGetRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.minhavacina.util.Utilitaria.criptografarSenha;
 
 @RequiredArgsConstructor
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+
+    @Override
+    public Usuario loadUserByUsername(String email) throws UsernameNotFoundException {
+        return Optional.ofNullable(usuarioRepository.findByEmail(email))
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário [ " + email + " ] não encontrado"));
+    }
 
     public List<UsuarioGetRequest> listarTodosOsUsuarios() {
         return usuarioMapper.converterParaListaUsuarioGetRequest(usuarioRepository.findAll());

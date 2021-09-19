@@ -9,3 +9,7 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  senha: NzBjZDlkN2YtNjdkMC00NWU5LThmZmQtNmEzY2JlMzQwZDMy
+  expiracao: 3600000
