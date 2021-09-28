@@ -12,4 +12,4 @@ spring:
 
 jwt:
   senha: NzBjZDlkN2YtNjdkMC00NWU5LThmZmQtNmEzY2JlMzQwZDMy
-  expiracao: 3600000
+  expiracao: 36000000

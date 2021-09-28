@@ -7,6 +7,7 @@ import br.com.minhavacina.repository.UsuarioRepository;
 import br.com.minhavacina.request.usuario.UsuarioGetRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
+import br.com.minhavacina.response.TokenLoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +24,7 @@ import static br.com.minhavacina.util.Utilitaria.objetoEstarNuloOuVazio;
 public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final TokenService tokenService;
 
     @Override
     public Usuario loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -59,6 +61,12 @@ public class UsuarioService implements UserDetailsService {
     public void deletarUsuario(Integer id) {
         Usuario usuario = buscarUsuarioPorId(id);
         usuarioRepository.delete(usuario);
+    }
+
+    public UsuarioGetRequest obterUsuarioPeloToken(TokenLoginResponse tokenLoginResponse) {
+        Integer idUsuario = tokenService.obterIdDoUsuario(tokenLoginResponse.getToken());
+        Usuario usuario = buscarUsuarioPorId(idUsuario);
+        return usuarioMapper.converterParaUsuarioGetRequest(usuario);
     }
 
     public Usuario buscarUsuarioPorEmail(String email) {

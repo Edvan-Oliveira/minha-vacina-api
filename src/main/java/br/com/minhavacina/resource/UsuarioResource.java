@@ -1,5 +1,6 @@
 package br.com.minhavacina.resource;
 
+import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.request.usuario.UsuarioGetRequest;
 import br.com.minhavacina.request.usuario.UsuarioLoginRequest;
 import br.com.minhavacina.request.usuario.UsuarioPostRequest;
@@ -10,6 +11,7 @@ import br.com.minhavacina.service.TokenService;
 import br.com.minhavacina.service.UsuarioService;
 import br.com.minhavacina.shared.Constantes;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +34,12 @@ public class UsuarioResource {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
-    @GetMapping
+    @PostMapping(Constantes.CONSULTAS.PELO_TOKEN)
+    public ResponseEntity<UsuarioGetRequest> obterUsuarioPeloToken(@RequestBody TokenLoginResponse tokenLoginResponse) {
+        return ResponseEntity.ok(usuarioService.obterUsuarioPeloToken(tokenLoginResponse));
+    }
+
+    @GetMapping(Constantes.CONSULTAS.LISTA)
     public ResponseEntity<List<UsuarioGetRequest>> listarTodosOsUsuarios() {
         return ResponseEntity.ok(usuarioService.listarTodosOsUsuarios());
     }

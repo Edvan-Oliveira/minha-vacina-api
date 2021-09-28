@@ -12,6 +12,12 @@ public interface Constantes {
     String LOGIN_ABSOLUTO =  USUARIO + "/login";
     String VALIDA_EMAIL = "/validar-email/{email}";
 
+
+    interface CONSULTAS {
+        String LISTA = "/listar";
+        String PELO_TOKEN = "/pelo-token";
+    }
+
     interface ROLES {
         String PREFIXO = "ROLE_";
         String WEB = PREFIXO + "WEB";
