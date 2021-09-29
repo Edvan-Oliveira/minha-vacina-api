@@ -19,8 +19,12 @@ import static br.com.minhavacina.util.Utilitaria.*;
 public class CampanhaService {
     private final CampanhaRepository campanhaRepository;
 
-    public List<Campanha> listarTodasAsCampanhas() {
-        return campanhaRepository.findAll();
+    public List<Campanha> listarCampanhasAtivas() {
+        return campanhaRepository.listarCampanhasAtivas();
+    }
+
+    public List<Campanha> listarCampanhasInativas() {
+        return campanhaRepository.listarCampanhasInativas();
     }
 
     public Campanha buscarCampanhaPorId(Integer id) {

@@ -4,7 +4,6 @@ import br.com.minhavacina.domain.Campanha;
 import br.com.minhavacina.request.campanha.CampanhaPostRequest;
 import br.com.minhavacina.request.campanha.CampanhaPutRequest;
 import br.com.minhavacina.service.CampanhaService;
-import br.com.minhavacina.shared.Constantes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +13,23 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
+import static br.com.minhavacina.shared.Constantes.CAMPANHA;
+import static br.com.minhavacina.shared.Constantes.CAMPANHA_INATIVA;
+
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(Constantes.CAMPANHA)
+@RequestMapping(CAMPANHA)
 public class CampanhaResource {
     private final CampanhaService campanhaService;
 
     @GetMapping
-    public ResponseEntity<List<Campanha>> listarTodasAsCampanhas() {
-        return ResponseEntity.ok(campanhaService.listarTodasAsCampanhas());
+    public ResponseEntity<List<Campanha>> listarCampanhasAtivas() {
+        return ResponseEntity.ok(campanhaService.listarCampanhasAtivas());
+    }
+
+    @GetMapping(CAMPANHA_INATIVA)
+    public ResponseEntity<List<Campanha>> listarCampanhasInativas() {
+        return ResponseEntity.ok(campanhaService.listarCampanhasInativas());
     }
 
     @GetMapping(path = "/{id}")

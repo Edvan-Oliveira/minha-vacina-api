@@ -7,6 +7,7 @@ public interface Constantes {
     String MUNICIPIO = PADRAO + "/municipios";
     String USUARIO = PADRAO + "/usuarios";
     String CAMPANHA = PADRAO + "/campanhas";
+    String CAMPANHA_INATIVA = "/inativas";
     String VACINA = PADRAO + "/vacinas";
     String LOGIN = "/login";
     String LOGIN_ABSOLUTO =  USUARIO + "/login";
