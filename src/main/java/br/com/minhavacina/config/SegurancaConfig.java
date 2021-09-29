@@ -18,6 +18,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static br.com.minhavacina.shared.Constantes.ROTAS_PUBLICAS.METODO_GET;
+import static br.com.minhavacina.shared.Constantes.ROTAS_PUBLICAS.METODO_POST;
+
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SegurancaConfig extends WebSecurityConfigurerAdapter {
@@ -34,8 +37,8 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, Constantes.LOGIN_ABSOLUTO, Constantes.USUARIO).permitAll()
-                .antMatchers(HttpMethod.GET, Constantes.MUNICIPIO).permitAll()
+                .antMatchers(HttpMethod.POST, METODO_POST).permitAll()
+                .antMatchers(HttpMethod.GET, METODO_GET).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
