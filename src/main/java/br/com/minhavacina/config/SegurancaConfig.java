@@ -34,8 +34,8 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, Constantes.LOGIN_ABSOLUTO).permitAll()
-                .antMatchers(HttpMethod.POST, Constantes.USUARIO).permitAll()
+                .antMatchers(HttpMethod.POST, Constantes.LOGIN_ABSOLUTO, Constantes.USUARIO).permitAll()
+                .antMatchers(HttpMethod.GET, Constantes.MUNICIPIO).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
