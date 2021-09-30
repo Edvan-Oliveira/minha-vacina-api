@@ -45,6 +45,12 @@ public class CampanhaService {
         campanhaRepository.save(campanha);
     }
 
+    public void finalizarCampanha(Integer id) {
+        Campanha campanha = buscarCampanhaPorId(id);
+        campanha.setAtiva(false);
+        campanhaRepository.save(campanha);
+    }
+
     public void deletarCampanha(Integer id) {
         Campanha campanha = buscarCampanhaPorId(id);
         campanhaRepository.delete(campanha);
@@ -59,7 +65,7 @@ public class CampanhaService {
         setarCampanhaAtiva(campanha);
     }
 
-    public void validarIdades(Campanha campanha) {
+    private void validarIdades(Campanha campanha) {
         if (objetoEstarNuloOuVazio(campanha.getIdadeMinima())
                 && objetoEstarNuloOuVazio(campanha.getIdadeMaxima()))
             return;
@@ -76,7 +82,7 @@ public class CampanhaService {
             throw new LancarAdvertencia("Idade mínima da campanha não pode ser menor que a idade máxima");
     }
 
-    public boolean validarDatasNulas(Campanha campanha) {
+    private boolean validarDatasNulas(Campanha campanha) {
         if (objetoEstarNuloOuVazio(campanha.getDataInicio())) {
             campanha.setDataInicio(new Date());
             campanha.setAtiva(true);

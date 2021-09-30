@@ -13,8 +13,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
-import static br.com.minhavacina.shared.Constantes.CAMPANHA;
-import static br.com.minhavacina.shared.Constantes.CAMPANHA_INATIVA;
+import static br.com.minhavacina.shared.Constantes.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -47,7 +46,14 @@ public class CampanhaResource {
     @Transactional
     public ResponseEntity<Void> atualizarCampanha(@RequestBody @Valid CampanhaPutRequest campanhaPutRequest) {
         campanhaService.atualizarCampanha(campanhaPutRequest);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(FINALIZA_CAMPANHA)
+    @Transactional
+    public ResponseEntity<Void> finalizarCampanha(@PathVariable Integer id) {
+        campanhaService.finalizarCampanha(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(path = "/{id}")
