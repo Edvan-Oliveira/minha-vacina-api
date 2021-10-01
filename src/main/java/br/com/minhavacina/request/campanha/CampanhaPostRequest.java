@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -35,4 +36,13 @@ public class CampanhaPostRequest {
 
     @Min(value = 0, message = "Idade máxima da campanha não pode ser menor que {value}")
     private Integer idadeMaxima;
+
+    @NotNull(message = "A hora de início do dia não pode ser nula")
+    private LocalTime horarioInicioDia;
+
+    @NotNull(message = "A hora de termino do dia não pode ser nula")
+    private LocalTime horarioFimDia;
+
+    @NotEmpty(message = "O local da campanha é obrigatório")
+    private String local;
 }
