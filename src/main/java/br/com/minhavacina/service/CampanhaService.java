@@ -83,13 +83,10 @@ public class CampanhaService {
     }
 
     private boolean validarDatasNulas(Campanha campanha) {
-        if (objetoEstarNuloOuVazio(campanha.getDataInicio())) {
-            campanha.setDataInicio(new Date());
-            campanha.setAtiva(true);
-        }
-        if (objetoEstarNuloOuVazio(campanha.getDataFim())) {
-            return false;
-        }
+        if (objetoEstarNuloOuVazio(campanha.getDataInicio()))
+            throw new LancarAdvertencia("Data de início da campanha não pode ser nula");
+        if (objetoEstarNuloOuVazio(campanha.getDataFim()))
+            throw new LancarAdvertencia("Data final da campanha não pode ser nula");
         return true;
     }
 
