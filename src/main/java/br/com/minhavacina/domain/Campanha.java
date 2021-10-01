@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Date;
 
-@Data @Entity
+@Data
+@Entity
 @Table(name = "campanhas")
 public class Campanha {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     private String descricao;
@@ -24,4 +27,7 @@ public class Campanha {
     private Date dataFim;
     private Integer idadeMinima;
     private Integer idadeMaxima;
+    private LocalTime horarioInicioDia;
+    private LocalTime horarioFimDia;
+    private String local;
 }
