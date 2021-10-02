@@ -1,12 +1,15 @@
 package br.com.minhavacina.service;
 
 import br.com.minhavacina.domain.Campanha;
+import br.com.minhavacina.domain.Permissao;
+import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.CampanhaMapper;
 import br.com.minhavacina.repository.CampanhaRepository;
 import br.com.minhavacina.request.campanha.CampanhaPostRequest;
 import br.com.minhavacina.request.campanha.CampanhaPutRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -20,7 +23,10 @@ public class CampanhaService {
     private final CampanhaRepository campanhaRepository;
 
     public List<Campanha> listarCampanhasAtivas() {
-        return campanhaRepository.listarCampanhasAtivas();
+        Usuario usuario = obterUsuarioAutenticado();
+        boolean usuarioApp = this.verificarUsuarioPermissaoApp(usuario);
+        return usuarioApp ? campanhaRepository.listarCampanhasPorMunicipio(usuario.getMunicipio())
+                : campanhaRepository.listarCampanhasAtivas();
     }
 
     public List<Campanha> listarCampanhasInativas() {
@@ -48,6 +54,7 @@ public class CampanhaService {
     public void finalizarCampanha(Integer id) {
         Campanha campanha = buscarCampanhaPorId(id);
         campanha.setAtiva(false);
+        campanha.setDataFim(new Date());
         campanhaRepository.save(campanha);
     }
 
@@ -104,5 +111,12 @@ public class CampanhaService {
     private void setarCampanhaAtiva(Campanha campanha) {
         Date dataAtual = converterDataTextoParaDataUtil(converterDataUtilParaDataTexto(new Date()));
         campanha.setAtiva(campanha.getDataInicio().getTime() == dataAtual.getTime());
+    }
+
+    private boolean verificarUsuarioPermissaoApp(Usuario usuario) {
+        for (Permissao permissao : usuario.getPermissoes()) {
+            if (permissao.getId() == 1) return true;
+        }
+        return false;
     }
 }

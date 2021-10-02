@@ -2,6 +2,8 @@ package br.com.minhavacina.util;
 
 import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.request.usuario.UsuarioPutRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -45,5 +47,11 @@ public final class Utilitaria {
 
     public static void criptografarSenha(Usuario usuario) {
          usuario.setSenha(encoderSenha.encode(usuario.getSenha()));
+    }
+
+    public static Usuario obterUsuarioAutenticado() {
+        Authentication autenticacao = SecurityContextHolder.getContext().getAuthentication();
+        if (objetoEstarNuloOuVazio(autenticacao)) return null;
+        return (Usuario) autenticacao.getPrincipal();
     }
 }
