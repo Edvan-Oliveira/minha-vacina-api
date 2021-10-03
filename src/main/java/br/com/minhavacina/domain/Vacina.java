@@ -14,6 +14,7 @@ public class Vacina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+    @Column(columnDefinition = "TEXT")
     private String descricao;
     private String caminhoImagem;
     @JsonIgnoreProperties("vacina")
