@@ -16,7 +16,8 @@ public class Vacina {
     private String nome;
     @Column(columnDefinition = "TEXT")
     private String descricao;
-    private String caminhoImagem;
+    @Column(columnDefinition = "TEXT")
+    private String imagem;
     @JsonIgnoreProperties("vacina")
     @OneToMany(mappedBy = "vacina")
     private List<Campanha> campanhas;
