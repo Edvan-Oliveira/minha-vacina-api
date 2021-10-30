@@ -26,7 +26,7 @@ public class UsuarioPutRequest {
     @NotNull(message = "Município não pode ser nulo")
     private Municipio municipio;
 
-    @NotEmpty(message = "Email não pode ser vázio")
+    @NotEmpty(message = "Email não pode ser vazio")
     @Email(message = "Esse email é inválido")
     private String email;
 
