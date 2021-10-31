@@ -1,6 +1,7 @@
 package br.com.minhavacina.resource;
 
 import br.com.minhavacina.domain.Local;
+import br.com.minhavacina.request.local.LocalFiltroDescricaoPostRequest;
 import br.com.minhavacina.request.local.LocalPostRequest;
 import br.com.minhavacina.request.local.LocalPutRequest;
 import br.com.minhavacina.service.LocalService;
@@ -13,6 +14,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
+import static br.com.minhavacina.shared.Constantes.FILTROS.POR_DESCRICAO;
 import static br.com.minhavacina.shared.Constantes.LOCAL;
 
 @RestController
@@ -35,6 +37,12 @@ public class LocalResource {
     @PostMapping
     public ResponseEntity<Local> cadastrarNovoLocal(@RequestBody @Valid LocalPostRequest localPostRequest) {
         return new ResponseEntity<>(localService.cadastrarNovoLocal(localPostRequest), HttpStatus.CREATED);
+    }
+
+    @PostMapping(POR_DESCRICAO)
+    public ResponseEntity<List<Local>> listarLocaisPorDescricao
+            (@RequestBody @Valid LocalFiltroDescricaoPostRequest localFiltroDescricaoPostRequest) {
+        return ResponseEntity.ok(localService.listarLocaisPorDescricaoEMunicipio(localFiltroDescricaoPostRequest));
     }
 
     @Transactional

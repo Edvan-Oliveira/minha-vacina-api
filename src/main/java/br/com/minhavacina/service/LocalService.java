@@ -6,6 +6,7 @@ import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.LocalMapper;
 import br.com.minhavacina.repository.LocalRepository;
+import br.com.minhavacina.request.local.LocalFiltroDescricaoPostRequest;
 import br.com.minhavacina.request.local.LocalPostRequest;
 import br.com.minhavacina.request.local.LocalPutRequest;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,11 @@ public class LocalService {
 
     public Local cadastrarNovoLocal(LocalPostRequest localPostRequest) {
         return localRepository.save(localMapper.converterParaLocal(localPostRequest));
+    }
+
+    public List<Local> listarLocaisPorDescricaoEMunicipio(LocalFiltroDescricaoPostRequest localFiltroDescricaoPostRequest) {
+        return localRepository.findByDescricaoContainsIgnoreCaseAndMunicipioEquals
+                (localFiltroDescricaoPostRequest.getDescricao(), localFiltroDescricaoPostRequest.getMunicipio());
     }
 
     public void atualizarLocal(LocalPutRequest localPutRequest) {

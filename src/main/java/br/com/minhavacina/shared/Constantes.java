@@ -16,6 +16,9 @@ public interface Constantes {
     String VALIDA_EMAIL_ABSOLUTO = USUARIO + "/validar-email/{email}";
     String LOCAL = PADRAO + "/locais";
 
+    interface FILTROS {
+        String POR_DESCRICAO = "/por-descricao";
+    }
 
     interface CONSULTAS {
         String LISTA = "/listar";

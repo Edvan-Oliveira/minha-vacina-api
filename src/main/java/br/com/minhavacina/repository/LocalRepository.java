@@ -14,4 +14,6 @@ public interface LocalRepository extends JpaRepository<Local, Integer> {
 
     @Query("select l from Local l where l.municipio = :municipio")
     List<Local> listarLocaisPeloMunicipio(@Param("municipio") Municipio municipio);
+
+    List<Local> findByDescricaoContainsIgnoreCaseAndMunicipioEquals(String descricao, Municipio municipio);
 }
