@@ -18,9 +18,10 @@ import java.util.List;
 public class LocalService {
     private final LocalMapper localMapper;
     private final LocalRepository localRepository;
+    private final MunicipioService municipioService;
 
-    public List<Local> listarLocaisPeloMunicipio(Municipio municipio) {
-        return localRepository.listarLocaisPeloMunicipio(municipio);
+    public List<Local> listarLocaisPeloMunicipio(Integer id) {
+        return localRepository.listarLocaisPeloMunicipio(municipioService.buscarMunicipioPorId(id));
     }
 
     public Local buscarLocalPorId(Integer id) {

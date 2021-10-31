@@ -7,9 +7,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity @Table(name = "municipios")
+@Entity
+@Table(name = "municipios")
 public class Municipio {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     @JsonIgnoreProperties("municipio")

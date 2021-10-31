@@ -14,6 +14,7 @@ public interface Constantes {
     String LOGIN_ABSOLUTO =  USUARIO + "/login";
     String VALIDA_EMAIL = "/validar-email/{email}";
     String VALIDA_EMAIL_ABSOLUTO = USUARIO + "/validar-email/{email}";
+    String LOCAL = PADRAO + "/locais";
 
 
     interface CONSULTAS {
