@@ -1,5 +1,6 @@
 package br.com.minhavacina.request.campanha;
 
+import br.com.minhavacina.domain.Local;
 import br.com.minhavacina.domain.Municipio;
 import br.com.minhavacina.domain.Vacina;
 import lombok.Data;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class CampanhaPutRequest {
@@ -47,6 +49,6 @@ public class CampanhaPutRequest {
     @NotNull(message = "A hora de termino do dia não pode ser nula")
     private LocalTime horarioFimDia;
 
-    @NotEmpty(message = "O local da campanha é obrigatório")
-    private String local;
+    @NotEmpty(message = "A campanha precisa ter pelo menos um local")
+    private List<Local> locais;
 }

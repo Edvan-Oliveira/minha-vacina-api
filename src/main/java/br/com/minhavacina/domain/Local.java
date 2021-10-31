@@ -1,10 +1,10 @@
 package br.com.minhavacina.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,4 +21,7 @@ public class Local {
     @JsonIgnoreProperties("campanhas")
     @ManyToOne
     private Municipio municipio;
+    @JsonIgnoreProperties("locais")
+    @ManyToMany(mappedBy = "locais")
+    private List<Campanha> campanhas;
 }

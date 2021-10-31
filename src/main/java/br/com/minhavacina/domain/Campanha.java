@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,5 +31,10 @@ public class Campanha {
     private Integer idadeMaxima;
     private LocalTime horarioInicioDia;
     private LocalTime horarioFimDia;
-    private String local;
+    @JsonIgnoreProperties("campanhas")
+    @ManyToMany
+    @JoinTable(name = "campanhas_locais",
+            joinColumns = @JoinColumn(name = "campanha_id"),
+            inverseJoinColumns = @JoinColumn(name = "local_id"))
+    private List<Local> locais;
 }

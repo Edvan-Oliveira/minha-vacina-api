@@ -21,6 +21,11 @@ import static br.com.minhavacina.shared.Constantes.LOCAL;
 public class LocalResource {
     private final LocalService localService;
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Local> buscarLocalPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(localService.buscarLocalPorId(id));
+    }
+
     @GetMapping(path = "/municipio/{id}")
     public ResponseEntity<List<Local>> listarLocaisPeloMunicipio(@PathVariable Integer id) {
         return ResponseEntity.ok(localService.listarLocaisPeloMunicipio(id));
