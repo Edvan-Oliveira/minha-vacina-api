@@ -9,10 +9,13 @@ import br.com.minhavacina.repository.LocalRepository;
 import br.com.minhavacina.request.local.LocalFiltroDescricaoPostRequest;
 import br.com.minhavacina.request.local.LocalPostRequest;
 import br.com.minhavacina.request.local.LocalPutRequest;
+import br.com.minhavacina.util.Utilitaria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static br.com.minhavacina.util.Utilitaria.objetoEstarNuloOuVazio;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +38,9 @@ public class LocalService {
     }
 
     public List<Local> listarLocaisPorDescricaoEMunicipio(LocalFiltroDescricaoPostRequest localFiltroDescricaoPostRequest) {
+        if (objetoEstarNuloOuVazio(localFiltroDescricaoPostRequest.getMunicipio().getId())){
+            throw new LancarAdvertencia("Id de município está nulo");
+        }
         return localRepository.findByDescricaoContainsIgnoreCaseAndMunicipioEquals
                 (localFiltroDescricaoPostRequest.getDescricao(), localFiltroDescricaoPostRequest.getMunicipio());
     }
