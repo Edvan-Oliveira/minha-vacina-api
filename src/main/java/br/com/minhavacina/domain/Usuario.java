@@ -18,6 +18,7 @@ public class Usuario implements UserDetails {
     private Integer id;
     private String nome;
     private String email;
+    private String tokenNotificao;
     private String senha;
 
     @Temporal(TemporalType.DATE)

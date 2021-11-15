@@ -53,9 +53,11 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public void atualizarUsuario(UsuarioPutRequest usuarioPutRequest) {
-        verificarSenhaAntesDeAtualizar(usuarioPutRequest);
-        Usuario usuario = usuarioMapper.converterParaUsuario(usuarioPutRequest);
-        usuarioRepository.save(usuario);
+        Usuario usuarioSalvo = buscarUsuarioPorId(usuarioPutRequest.getId());
+        verificarSenhaAntesDeAtualizar(usuarioPutRequest, usuarioSalvo);
+        Usuario usuarioNovo = usuarioMapper.converterParaUsuario(usuarioPutRequest);
+        salvarCamposImutaveis(usuarioNovo, usuarioSalvo);
+        usuarioRepository.save(usuarioNovo);
     }
 
     public void deletarUsuario(Integer id) {
@@ -73,10 +75,13 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findByEmail(email);
     }
 
-    private void verificarSenhaAntesDeAtualizar(UsuarioPutRequest usuarioPutRequest) {
-        Usuario usuarioSalvo = buscarUsuarioPorId(usuarioPutRequest.getId());
+    private void verificarSenhaAntesDeAtualizar(UsuarioPutRequest usuarioPutRequest, Usuario usuarioSalvo) {
         String senha = objetoEstarNuloOuVazio(usuarioPutRequest.getSenha())
                 ? usuarioSalvo.getSenha() : criptografarSenha(usuarioPutRequest.getSenha());
         usuarioPutRequest.setSenha(senha);
+    }
+
+    private void salvarCamposImutaveis(Usuario usuarioNovo, Usuario usuarioSalvo) {
+        usuarioNovo.setTokenNotificao(usuarioSalvo.getTokenNotificao());
     }
 }

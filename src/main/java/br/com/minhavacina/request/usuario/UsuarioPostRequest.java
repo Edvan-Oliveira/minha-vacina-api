@@ -31,5 +31,8 @@ public class UsuarioPostRequest {
     @Size(max = 50, message = "Senha não pode passar de {max} caracteres")
     private String senha;
 
+    @NotEmpty(message = "Token de notificação não pode ser vazio")
+    private String tokenNotificao;
+
     private List<Vacina> vacinas;
 }
