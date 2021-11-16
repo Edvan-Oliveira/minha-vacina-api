@@ -15,6 +15,8 @@ public interface Constantes {
     String VALIDA_EMAIL = "/validar-email/{email}";
     String VALIDA_EMAIL_ABSOLUTO = USUARIO + "/validar-email/{email}";
     String LOCAL = PADRAO + "/locais";
+    String NOTIFICACAO = PADRAO + "/notificacao";
+    String NOTIFICACAO_TOKEN =  NOTIFICACAO + "/token";
 
     interface FILTROS {
         String POR_DESCRICAO = "/por-descricao";
