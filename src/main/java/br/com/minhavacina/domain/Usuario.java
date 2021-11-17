@@ -25,6 +25,7 @@ public class Usuario implements UserDetails {
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
 
+    @JsonIgnoreProperties( { "campanhas"})
     @ManyToOne
     private Municipio municipio;
 

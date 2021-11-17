@@ -25,7 +25,7 @@ public class Vacina {
     @OneToMany(mappedBy = "vacina")
     private List<Campanha> campanhas;
 
-    @JsonIgnoreProperties({"vacinas", "municipio", "campanhas", "tokenNotificao", "senha", "credentialsNonExpired",
+    @JsonIgnoreProperties({"vacinas", "campanhas", "tokenNotificao", "senha", "credentialsNonExpired",
             "accountNonExpired", "authorities", "accountNonLocked", "username", "password", "enabled"})
     @ManyToMany(mappedBy = "vacinas")
     private List<Usuario> usuarios;

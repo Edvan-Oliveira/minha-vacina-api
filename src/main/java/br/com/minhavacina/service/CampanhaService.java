@@ -5,6 +5,7 @@ import br.com.minhavacina.domain.Permissao;
 import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.CampanhaMapper;
+import br.com.minhavacina.notification.service.NotificacaoService;
 import br.com.minhavacina.repository.CampanhaRepository;
 import br.com.minhavacina.request.campanha.CampanhaPostRequest;
 import br.com.minhavacina.request.campanha.CampanhaPutRequest;
@@ -20,7 +21,9 @@ import static br.com.minhavacina.util.Utilitaria.*;
 @Service
 @RequiredArgsConstructor
 public class CampanhaService {
+
     private final CampanhaRepository campanhaRepository;
+    private final NotificacaoService notificacaoService;
 
     public List<Campanha> listarCampanhasAtivas() {
         Usuario usuario = obterUsuarioAutenticado();
@@ -41,7 +44,9 @@ public class CampanhaService {
     public Campanha cadastrarNovaCampanha(CampanhaPostRequest campanhaPostRequest) {
         Campanha campanha = CampanhaMapper.INSTANCIA.converterParaCampanha(campanhaPostRequest);
         validarCampanha(campanha);
-        return campanhaRepository.save(campanha);
+        Campanha novaCampanha = campanhaRepository.save(campanha);
+        notificacaoService.enviarNotificacaoDeCampanhaAberta(novaCampanha);
+        return novaCampanha;
     }
 
     public void atualizarCampanha(CampanhaPutRequest campanhaPutRequest) {
