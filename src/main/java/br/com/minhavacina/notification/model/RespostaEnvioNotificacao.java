@@ -1,4 +1,4 @@
-package br.com.minhavacina.notification.models;
+package br.com.minhavacina.notification.model;
 
 import lombok.Data;
 

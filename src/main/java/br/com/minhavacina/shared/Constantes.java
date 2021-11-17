@@ -17,6 +17,7 @@ public interface Constantes {
     String LOCAL = PADRAO + "/locais";
     String NOTIFICACAO = PADRAO + "/notificacao";
     String NOTIFICACAO_TOKEN =  NOTIFICACAO + "/token";
+    String EXPO_NOTIFICACAO = "https://exp.host/--/api/v2/push/send";
 
     interface FILTROS {
         String POR_DESCRICAO = "/por-descricao";

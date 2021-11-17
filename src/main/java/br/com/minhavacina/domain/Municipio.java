@@ -14,6 +14,7 @@ public class Municipio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
     @JsonIgnoreProperties("municipio")
     @OneToMany(mappedBy = "municipio")
     private List<Campanha> campanhas;

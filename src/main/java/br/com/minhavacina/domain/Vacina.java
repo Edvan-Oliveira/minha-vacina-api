@@ -14,11 +14,19 @@ public class Vacina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
     @Column(columnDefinition = "TEXT")
     private String descricao;
+
     @Column(columnDefinition = "TEXT")
     private String imagem;
-    @JsonIgnoreProperties("vacina")
+
+    @JsonIgnoreProperties({"vacina", "usuarios"})
     @OneToMany(mappedBy = "vacina")
     private List<Campanha> campanhas;
+
+    @JsonIgnoreProperties({"vacinas", "municipio", "campanhas", "tokenNotificao", "senha", "credentialsNonExpired",
+            "accountNonExpired", "authorities", "accountNonLocked", "username", "password", "enabled"})
+    @ManyToMany(mappedBy = "vacinas")
+    private List<Usuario> usuarios;
 }

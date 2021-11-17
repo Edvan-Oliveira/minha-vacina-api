@@ -16,11 +16,14 @@ public class Campanha {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
     @Column(columnDefinition = "TEXT")
     private String descricao;
+
     @JsonIgnoreProperties("campanhas")
     @ManyToOne
     private Vacina vacina;
+
     @JsonIgnoreProperties("campanhas")
     @ManyToOne
     private Municipio municipio;
@@ -31,10 +34,19 @@ public class Campanha {
     private Integer idadeMaxima;
     private LocalTime horarioInicioDia;
     private LocalTime horarioFimDia;
+
     @JsonIgnoreProperties("campanhas")
     @ManyToMany
     @JoinTable(name = "campanhas_locais",
             joinColumns = @JoinColumn(name = "campanha_id"),
             inverseJoinColumns = @JoinColumn(name = "local_id"))
     private List<Local> locais;
+
+    @JsonIgnoreProperties({"campanhas", "municipio", "tokenNotificao", "senha", "credentialsNonExpired",
+            "accountNonExpired", "authorities", "accountNonLocked", "username", "password", "enabled"})
+    @ManyToMany
+    @JoinTable(name = "campanhas_usuarios",
+            joinColumns = @JoinColumn(name = "campanha_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private List<Usuario> usuarios;
 }

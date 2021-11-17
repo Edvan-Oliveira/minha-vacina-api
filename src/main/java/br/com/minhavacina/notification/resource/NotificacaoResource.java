@@ -1,6 +1,6 @@
 package br.com.minhavacina.notification.resource;
 
-import br.com.minhavacina.notification.models.TokenNotificacao;
+import br.com.minhavacina.notification.model.TokenNotificacao;
 import br.com.minhavacina.notification.service.NotificacaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

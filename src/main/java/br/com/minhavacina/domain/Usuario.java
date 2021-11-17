@@ -1,5 +1,6 @@
 package br.com.minhavacina.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,10 +34,13 @@ public class Usuario implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "vacina_id"))
     private List<Vacina> vacinas;
 
+    @ManyToMany(mappedBy = "usuarios")
+    private List<Campanha> campanhas;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuarios_permissoes",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     private List<Permissao> permissoes;
 
     @Override
