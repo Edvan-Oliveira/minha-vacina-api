@@ -10,6 +10,7 @@ import br.com.minhavacina.repository.CampanhaRepository;
 import br.com.minhavacina.request.campanha.CampanhaPostRequest;
 import br.com.minhavacina.request.campanha.CampanhaPutRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,14 @@ public class CampanhaService {
 
     private final CampanhaRepository campanhaRepository;
     private final NotificacaoService notificacaoService;
+
+    @Scheduled(fixedRate = 86400000)
+    private void verificarSePossuiCampanhasParaSeremDesativadas() {
+        campanhaRepository.findAll().stream()
+                .filter(Campanha::isAtiva)
+                .filter(campanha -> campanha.getDataFim().getTime() < new Date().getTime())
+                .forEach(campanha -> finalizarCampanha(campanha.getId()));
+    }
 
     public List<Campanha> listarCampanhasAtivas() {
         Usuario usuario = obterUsuarioAutenticado();
