@@ -42,7 +42,7 @@ public class Campanha {
             inverseJoinColumns = @JoinColumn(name = "local_id"))
     private List<Local> locais;
 
-    @JsonIgnoreProperties({"campanhas", "municipio", "tokenNotificao", "senha", "credentialsNonExpired",
+    @JsonIgnoreProperties({"campanhas", "municipio", "vacinas", "tokenNotificao", "senha", "credentialsNonExpired",
             "accountNonExpired", "authorities", "accountNonLocked", "username", "password", "enabled"})
     @ManyToMany
     @JoinTable(name = "campanhas_usuarios",

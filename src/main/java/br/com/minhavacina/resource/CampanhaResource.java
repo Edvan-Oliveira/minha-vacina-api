@@ -61,4 +61,11 @@ public class CampanhaResource {
         campanhaService.deletarCampanha(id);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
+
+    @Transactional
+    @PostMapping(ASSOCIAR_USUARIO)
+    public ResponseEntity<Void> associarUsuario(@RequestBody Campanha campanha) {
+        campanhaService.associarUsuario(campanha);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

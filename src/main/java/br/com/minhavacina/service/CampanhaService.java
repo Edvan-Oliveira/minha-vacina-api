@@ -11,7 +11,6 @@ import br.com.minhavacina.request.campanha.CampanhaPostRequest;
 import br.com.minhavacina.request.campanha.CampanhaPutRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -75,6 +74,12 @@ public class CampanhaService {
     public void deletarCampanha(Integer id) {
         Campanha campanha = buscarCampanhaPorId(id);
         campanhaRepository.delete(campanha);
+    }
+
+    public void associarUsuario(Campanha campanha) {
+        campanha = buscarCampanhaPorId(campanha.getId());
+        campanha.getUsuarios().add(obterUsuarioAutenticado());
+        campanhaRepository.save(campanha);
     }
 
     private void validarCampanha(Campanha campanha) {
