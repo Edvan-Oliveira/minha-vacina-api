@@ -54,4 +54,9 @@ public final class Utilitaria {
         if (objetoEstarNuloOuVazio(autenticacao)) return null;
         return (Usuario) autenticacao.getPrincipal();
     }
+
+    public static Integer obterIdDoUsuarioAutenticado() {
+        Usuario usuario = obterUsuarioAutenticado();
+        return usuario != null ? usuario.getId() : -1;
+    }
 }

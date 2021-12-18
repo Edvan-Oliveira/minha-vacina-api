@@ -63,9 +63,16 @@ public class CampanhaResource {
     }
 
     @Transactional
-    @PostMapping(ASSOCIAR_USUARIO)
+    @PutMapping(ASSOCIAR_USUARIO)
     public ResponseEntity<Void> associarUsuario(@RequestBody Campanha campanha) {
         campanhaService.associarUsuario(campanha);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Transactional
+    @PutMapping(DESASSOCIAR_USUARIO)
+    public ResponseEntity<Void> desassociarUsuario(@RequestBody Campanha campanha) {
+        campanhaService.desassociarUsuario(campanha);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -27,6 +27,6 @@ public class Vacina {
 
     @JsonIgnoreProperties({"vacinas", "campanhas", "tokenNotificao", "senha", "credentialsNonExpired",
             "accountNonExpired", "authorities", "accountNonLocked", "username", "password", "enabled"})
-    @ManyToMany(mappedBy = "vacinas")
+    @ManyToMany(mappedBy = "vacinas", cascade = CascadeType.DETACH)
     private List<Usuario> usuarios;
 }

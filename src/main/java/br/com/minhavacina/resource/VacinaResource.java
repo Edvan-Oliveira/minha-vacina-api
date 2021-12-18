@@ -2,20 +2,20 @@ package br.com.minhavacina.resource;
 
 import br.com.minhavacina.domain.Vacina;
 import br.com.minhavacina.service.VacinaService;
-import br.com.minhavacina.shared.Constantes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static br.com.minhavacina.shared.Constantes.*;
+
 @RestController
-@RequestMapping(Constantes.VACINA)
+@RequestMapping(VACINA)
 @RequiredArgsConstructor
 public class VacinaResource {
+
     private final VacinaService vacinaService;
 
     @GetMapping
@@ -26,5 +26,17 @@ public class VacinaResource {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Vacina> buscarVacinaPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(vacinaService.buscarVacinaPorId(id));
+    }
+
+    @PutMapping(ASSOCIAR_USUARIO)
+    public ResponseEntity<Void> associarUsuario(@RequestBody Vacina vacina) {
+        vacinaService.associarUsuario(vacina);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(DESASSOCIAR_USUARIO)
+    public ResponseEntity<Void> desassociarUsuario(@RequestBody Vacina vacina) {
+        vacinaService.desassociarUsuario(vacina);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

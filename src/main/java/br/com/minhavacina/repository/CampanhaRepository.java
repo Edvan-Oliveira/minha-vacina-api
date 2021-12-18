@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,6 @@ public interface CampanhaRepository extends JpaRepository<Campanha, Integer> {
     @Query("select c from Campanha c where c.ativa = false")
     List<Campanha> listarCampanhasInativas();
 
-    @Query("select c from Campanha c where c.municipio = :municipio")
-    List<Campanha> listarCampanhasPorMunicipio(@Param("municipio") Municipio municipio);
+    @Query("select c from Campanha c where c.municipio = :municipio and c.dataFim >= :dataAtual")
+    List<Campanha> listarCampanhasPorMunicipio(@Param("municipio") Municipio municipio, @Param("dataAtual") Date dataAtual);
 }

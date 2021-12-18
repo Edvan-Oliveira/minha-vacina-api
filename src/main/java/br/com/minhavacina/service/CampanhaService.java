@@ -7,12 +7,14 @@ import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.CampanhaMapper;
 import br.com.minhavacina.notification.service.NotificacaoService;
 import br.com.minhavacina.repository.CampanhaRepository;
+import br.com.minhavacina.repository.UsuarioRepository;
 import br.com.minhavacina.request.campanha.CampanhaPostRequest;
 import br.com.minhavacina.request.campanha.CampanhaPutRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class CampanhaService {
 
     private final CampanhaRepository campanhaRepository;
     private final NotificacaoService notificacaoService;
+    private final UsuarioRepository usuarioRepository;
 
     @Scheduled(fixedRate = 86400000)
     private void verificarSePossuiCampanhasParaSeremDesativadas() {
@@ -36,8 +39,9 @@ public class CampanhaService {
     public List<Campanha> listarCampanhasAtivas() {
         Usuario usuario = obterUsuarioAutenticado();
         boolean usuarioApp = this.verificarUsuarioPermissaoApp(usuario);
-        return usuarioApp ? campanhaRepository.listarCampanhasPorMunicipio(usuario.getMunicipio())
-                : campanhaRepository.listarCampanhasAtivas();
+        if (!usuarioApp) return campanhaRepository.listarCampanhasAtivas();
+        return campanhaRepository.listarCampanhasPorMunicipio(usuario.getMunicipio(),
+                converterDataTextoParaDataUtil(LocalDate.now().toString()));
     }
 
     public List<Campanha> listarCampanhasInativas() {
@@ -79,6 +83,13 @@ public class CampanhaService {
     public void associarUsuario(Campanha campanha) {
         campanha = buscarCampanhaPorId(campanha.getId());
         campanha.getUsuarios().add(obterUsuarioAutenticado());
+        campanhaRepository.save(campanha);
+    }
+
+    public void desassociarUsuario(Campanha campanha) {
+        campanha = buscarCampanhaPorId(campanha.getId());
+        Usuario usuario = usuarioRepository.findById(obterIdDoUsuarioAutenticado()).get();
+        campanha.getUsuarios().remove(usuario);
         campanhaRepository.save(campanha);
     }
 
