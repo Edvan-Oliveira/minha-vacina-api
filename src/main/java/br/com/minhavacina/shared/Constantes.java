@@ -9,8 +9,8 @@ public interface Constantes {
     String CAMPANHA = PADRAO + "/campanhas";
     String CAMPANHA_INATIVA = "/inativas";
     String FINALIZA_CAMPANHA = "/finalizar/{id}";
-    String ASSOCIAR_USUARIO = "/associar-usuario";
-    String DESASSOCIAR_USUARIO = "/desassociar-usuario";
+    String ASSOCIAR_USUARIO = "/associar-usuario/{id}";
+    String DESASSOCIAR_USUARIO = "/desassociar-usuario/{id}";
     String VACINA = PADRAO + "/vacinas";
     String LOGIN = "/login";
     String LOGIN_ABSOLUTO =  USUARIO + "/login";

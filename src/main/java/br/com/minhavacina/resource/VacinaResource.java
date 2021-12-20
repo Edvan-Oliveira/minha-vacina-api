@@ -29,14 +29,14 @@ public class VacinaResource {
     }
 
     @PutMapping(ASSOCIAR_USUARIO)
-    public ResponseEntity<Void> associarUsuario(@RequestBody Vacina vacina) {
-        vacinaService.associarUsuario(vacina);
+    public ResponseEntity<Void> associarUsuario(@PathVariable Integer id) {
+        vacinaService.associarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(DESASSOCIAR_USUARIO)
-    public ResponseEntity<Void> desassociarUsuario(@RequestBody Vacina vacina) {
-        vacinaService.desassociarUsuario(vacina);
+    public ResponseEntity<Void> desassociarUsuario(@PathVariable Integer id) {
+        vacinaService.desassociarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -64,15 +64,15 @@ public class CampanhaResource {
 
     @Transactional
     @PutMapping(ASSOCIAR_USUARIO)
-    public ResponseEntity<Void> associarUsuario(@RequestBody Campanha campanha) {
-        campanhaService.associarUsuario(campanha);
+    public ResponseEntity<Void> associarUsuario(@PathVariable Integer id) {
+        campanhaService.associarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Transactional
     @PutMapping(DESASSOCIAR_USUARIO)
-    public ResponseEntity<Void> desassociarUsuario(@RequestBody Campanha campanha) {
-        campanhaService.desassociarUsuario(campanha);
+    public ResponseEntity<Void> desassociarUsuario(@PathVariable Integer id) {
+        campanhaService.desassociarUsuario(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.minhavacina.service;
 
+import br.com.minhavacina.domain.Permissao;
 import br.com.minhavacina.domain.Usuario;
 import br.com.minhavacina.exception.LancarAdvertencia;
 import br.com.minhavacina.mapper.UsuarioMapper;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +51,7 @@ public class UsuarioService implements UserDetailsService {
     public UsuarioGetRequest cadastrarNovoUsuario(UsuarioPostRequest usuarioPostRequest) {
         Usuario usuario = usuarioMapper.converterParaUsuario(usuarioPostRequest);
         criptografarSenha(usuario);
+        definirPermissaoDeApp(usuario);
         return usuarioMapper.converterParaUsuarioGetRequest(usuarioRepository.save(usuario));
     }
 
@@ -83,5 +86,13 @@ public class UsuarioService implements UserDetailsService {
 
     private void salvarCamposImutaveis(Usuario usuarioNovo, Usuario usuarioSalvo) {
         usuarioNovo.setTokenNotificao(usuarioSalvo.getTokenNotificao());
+    }
+
+    private void definirPermissaoDeApp(Usuario usuario) {
+        usuario.setPermissoes(new ArrayList<>());
+        Permissao permissao = new Permissao();
+        permissao.setId(1);
+        permissao.setDescricao("ROLE_APP");
+        usuario.getPermissoes().add(permissao);
     }
 }

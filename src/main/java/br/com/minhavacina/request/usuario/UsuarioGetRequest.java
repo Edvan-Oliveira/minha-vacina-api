@@ -24,7 +24,7 @@ public class UsuarioGetRequest {
     private Municipio municipio;
     @JsonIgnoreProperties( { "usuarios", "campanhas"})
     private List<Vacina> vacinas;
-    @JsonIgnoreProperties( { "usuarios", "municipio" } )
+    @JsonIgnoreProperties( { "usuarios", "municipio", "imagem" } )
     private List<Campanha> campanhas;
     private List<Permissao> permissoes;
 }

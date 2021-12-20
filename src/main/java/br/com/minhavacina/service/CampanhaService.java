@@ -80,14 +80,14 @@ public class CampanhaService {
         campanhaRepository.delete(campanha);
     }
 
-    public void associarUsuario(Campanha campanha) {
-        campanha = buscarCampanhaPorId(campanha.getId());
+    public void associarUsuario(Integer idCampanha) {
+        Campanha campanha = buscarCampanhaPorId(idCampanha);
         campanha.getUsuarios().add(obterUsuarioAutenticado());
         campanhaRepository.save(campanha);
     }
 
-    public void desassociarUsuario(Campanha campanha) {
-        campanha = buscarCampanhaPorId(campanha.getId());
+    public void desassociarUsuario(Integer idCampanha) {
+        Campanha campanha = buscarCampanhaPorId(idCampanha);
         Usuario usuario = usuarioRepository.findById(obterIdDoUsuarioAutenticado()).get();
         campanha.getUsuarios().remove(usuario);
         campanhaRepository.save(campanha);

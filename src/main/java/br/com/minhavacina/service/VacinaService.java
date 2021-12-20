@@ -29,14 +29,14 @@ public class VacinaService {
                 .orElseThrow(() -> new LancarAdvertencia("Vacina não encontrada"));
     }
 
-    public void associarUsuario(Vacina vacina) {
-        vacina = buscarVacinaPorId(vacina.getId());
+    public void associarUsuario(Integer idVacina) {
+        Vacina vacina = buscarVacinaPorId(idVacina);
         Usuario usuario = usuarioRepository.findById(obterIdDoUsuarioAutenticado()).get();
         usuario.getVacinas().add(vacina);
         usuarioRepository.save(usuario);
     }
-    public void desassociarUsuario(Vacina vacina) {
-        vacina = buscarVacinaPorId(vacina.getId());
+    public void desassociarUsuario(Integer idVacina) {
+        Vacina vacina = buscarVacinaPorId(idVacina);
         Usuario usuario = usuarioRepository.findById(obterIdDoUsuarioAutenticado()).get();
         usuario.getVacinas().remove(vacina);
         usuarioRepository.save(usuario);
